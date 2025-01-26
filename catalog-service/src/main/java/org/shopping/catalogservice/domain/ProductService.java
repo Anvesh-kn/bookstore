@@ -12,15 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ApplicationProperties applicationProperties;
 
-    ProductService(ProductRepository productRepository) {
+    ProductService(ProductRepository productRepository, ApplicationProperties applicationProperties) {
         this.productRepository = productRepository;
+        this.applicationProperties = applicationProperties;
     }
 
     public PageResult<Product> getProduct(int pageNo) {
         Sort sort = Sort.by("name").ascending();
         pageNo = pageNo < 1 ? 0 : pageNo - 1;
-        Pageable pageable = PageRequest.of(pageNo, 5, sort);
+        Pageable pageable = PageRequest.of(pageNo, applicationProperties.pageSize(), sort);
         Page<Product> products = productRepository.findAll(pageable).map(ProductMapper::toProduct);
         return new PageResult<>(
                 products.getNumber() + 1,
