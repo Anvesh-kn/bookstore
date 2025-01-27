@@ -1,12 +1,11 @@
 package org.shopping.catalogservice.web.controllers;
 
-import io.restassured.http.ContentType;
-import org.junit.jupiter.api.Test;
-import org.shopping.catalogservice.AbstractTest;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Test;
+import org.shopping.catalogservice.AbstractTest;
 
 class ProductControllerTest extends AbstractTest {
 
