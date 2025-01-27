@@ -12,8 +12,8 @@ class TestcontainersConfiguration {
     @ServiceConnection
     PostgreSQLContainer<?> postgresContainer() {
         return new PostgreSQLContainer<>("postgres:16")
-                .withDatabaseName("testdb")
-                .withUsername("testuser")
-                .withPassword("testpass");
+                .withDatabaseName("postgres")
+                .withUsername("postgres")
+                .withPassword("postgres");
     }
 }
