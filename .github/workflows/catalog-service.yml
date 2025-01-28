@@ -4,7 +4,7 @@ on:
     paths:
       - catalog-service/** # Trigger on changes to the catalog-service directory
     branches:
-      - main
+      - master
 
 jobs:
   build:
