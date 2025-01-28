@@ -26,7 +26,7 @@ class ProductController {
 
     @GetMapping("/{code}")
     ResponseEntity<Product> getProduct(@PathVariable(name = "code") String code) {
-        System.out.println("get product by code ran");
+        System.out.println("get product by code");
         return productService
                 .getProduct(code)
                 .map(ResponseEntity::ok)
