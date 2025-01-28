@@ -3,6 +3,7 @@ package org.shopping.catalogservice.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,25 @@ public class ProductRepositoryTest {
         List<ProductEntity> products = this.productRepository.findAll();
         System.out.println("passed");
         assertThat(products).hasSize(15);
+    }
+
+    @Test
+    public void getProductByCode() {
+        Optional<ProductEntity> product = this.productRepository.findByCode("P100");
+        assertThat(product).isNotNull();
+        assertThat(product.isPresent()).isTrue();
+        ProductEntity productEntity = product.get();
+        assertThat(productEntity.getCode()).isEqualTo("P100");
+        assertThat(productEntity.getName()).isEqualTo("The Hunger Games");
+        assertThat(productEntity.getDescription())
+                .isEqualTo("Winning will make you famous. Losing means certain death...");
+        assertThat(productEntity.getPrice().doubleValue()).isEqualTo(34.0);
+    }
+
+    @Test
+    public void getProductByCodeNotFound() {
+        Optional<ProductEntity> product = this.productRepository.findByCode("P999");
+        assertThat(product).isNotNull();
+        assertThat(product.isPresent()).isFalse();
     }
 }
