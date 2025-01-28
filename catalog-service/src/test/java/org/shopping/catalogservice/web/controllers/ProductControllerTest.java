@@ -6,7 +6,9 @@ import static org.hamcrest.Matchers.*;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import org.shopping.catalogservice.AbstractTest;
+import org.springframework.test.context.jdbc.Sql;
 
+@Sql("/test_data.sql")
 class ProductControllerTest extends AbstractTest {
 
     @Test
