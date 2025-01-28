@@ -5,7 +5,6 @@ import org.shopping.catalogservice.domain.Product;
 import org.shopping.catalogservice.domain.ProductNotFoundException;
 import org.shopping.catalogservice.domain.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.web.exchanges.HttpExchange;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,8 @@ class ProductController {
 
     @GetMapping("/{code}")
     ResponseEntity<Product> getProduct(@PathVariable(name = "code") String code) {
-        return productService.getProduct(code)
+        return productService
+                .getProduct(code)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> ProductNotFoundException.forCode(code));
     }
