@@ -11,9 +11,11 @@ class TestcontainersConfiguration {
     @Bean
     @ServiceConnection
     PostgreSQLContainer<?> postgresContainer() {
-        return new PostgreSQLContainer<>("postgres:16")
-                .withDatabaseName("testdb")
-                .withUsername("testuser")
-                .withPassword("testpass");
+        return new PostgreSQLContainer<>("postgres:17")
+                .withDatabaseName("postgres")
+                .withUsername("postgres")
+                .withPassword("postgres");
+
+        //        return new PostgreSQLContainer<>(DockerImageName.parse("postgres:16-alpine"));
     }
 }

@@ -1,13 +1,11 @@
 package org.shopping.catalogservice;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 
-@Import(TestcontainersConfiguration.class)
-@SpringBootTest
-class CatalogServiceApplicationTests {
+class CatalogServiceApplicationTests extends AbstractTest {
 
     @Test
-    void contextLoads() {}
+    void contextLoads() {
+        System.out.println("Application is running on port: " + port);
+    }
 }
