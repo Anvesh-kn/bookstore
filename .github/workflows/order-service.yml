@@ -2,7 +2,7 @@ name : catalog service
 on:
   push:
     paths:
-      - catalog-service/** # Trigger on changes to the catalog-service directory
+      - order-service/** # Trigger on changes to the catalog-service directory
     branches:
       - 'master'
   pull_request:
@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./catalog-service
+      working-directory: ./order-service
     defaults:
       run:
         working-directory: ${{ env.working-directory }}
@@ -40,4 +40,4 @@ jobs:
         name: Build and push Docker image
         run: |
           ./mvnw spring-boot:build-image -Dskiptests
-          docker push ${{ secrets.DOCKER_USERNAME }}/bookstore-catalog-service:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/bookstore-order-service:latest
