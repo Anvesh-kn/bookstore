@@ -1,6 +1,5 @@
 package org.shopping.orderservice;
 
-
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;

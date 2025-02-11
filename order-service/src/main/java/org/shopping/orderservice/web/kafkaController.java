@@ -1,18 +1,12 @@
 package org.shopping.orderservice.web;
 
+import java.util.UUID;
 import org.shopping.orderservice.domain.ApplicationProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
-
 
 @RestController
 public class kafkaController {
@@ -28,15 +22,14 @@ public class kafkaController {
     public ResponseEntity<String> createOrder(@RequestBody MyMessage message) {
         String uniqueKey = UUID.randomUUID().toString();
         System.out.println(uniqueKey);
-        MyPayload payloadWithTimestamp = new MyPayload(message.payload().content(), message.payload().timestamp());
+        MyPayload payloadWithTimestamp =
+                new MyPayload(message.payload().content(), message.payload().timestamp());
         MyMessage messageWithTimestamp = new MyMessage(message.routingKey(), payloadWithTimestamp);
         kafkaTemplate.send(applicationProperties.newOrdersTopic(), uniqueKey, messageWithTimestamp.payload());
         return ResponseEntity.ok("Order sent to kafka");
     }
 }
 
-record MyMessage(String routingKey, MyPayload payload) {
-}
+record MyMessage(String routingKey, MyPayload payload) {}
 
-record MyPayload(String content, String timestamp) {
-}
+record MyPayload(String content, String timestamp) {}

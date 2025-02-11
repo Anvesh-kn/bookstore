@@ -1,5 +1,7 @@
 package org.shopping.orderservice.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -14,9 +16,6 @@ import org.springframework.kafka.support.converter.JsonMessageConverter;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableConfigurationProperties(ApplicationProperties.class)
@@ -56,7 +55,8 @@ public class KafkaConfiguration {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        ConcurrentKafkaListenerContainerFactory<String, Object> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
@@ -65,22 +65,27 @@ public class KafkaConfiguration {
     public NewTopic orderEventsTopic() {
         return new NewTopic(applicationProperties.orderEventsTopic(), 2, (short) 1);
     }
+
     @Bean
     public NewTopic newOrdersTopic() {
         return new NewTopic(applicationProperties.newOrdersTopic(), 2, (short) 1);
     }
+
     @Bean
     public NewTopic deliveredOrdersTopic() {
         return new NewTopic(applicationProperties.deliveredOrdersTopic(), 2, (short) 1);
     }
+
     @Bean
     public NewTopic cancelledOrdersTopic() {
         return new NewTopic(applicationProperties.cancelledOrdersTopic(), 2, (short) 1);
     }
+
     @Bean
     public NewTopic errorOrdersTopic() {
         return new NewTopic(applicationProperties.errorOrdersTopic(), 2, (short) 1);
     }
+
     @Bean
     public JsonMessageConverter jsonMessageConverter() {
         return new JsonMessageConverter();

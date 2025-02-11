@@ -1,10 +1,6 @@
 package org.shopping.orderservice.domain;
 
-
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-
 
 @ConfigurationProperties(prefix = "orders")
 public record ApplicationProperties(
@@ -12,7 +8,4 @@ public record ApplicationProperties(
         String newOrdersTopic,
         String deliveredOrdersTopic,
         String cancelledOrdersTopic,
-        String errorOrdersTopic
-) {
-
-}
+        String errorOrdersTopic) {}
