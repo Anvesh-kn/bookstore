@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<instancio.version>5.2.1</instancio.version>
 		<spring-cloud.version>2024.0.0</spring-cloud.version>
 		<dockerImageName>anveshlp/bookstore-${project.artifactId}</dockerImageName>
 	</properties>
@@ -94,6 +95,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.instancio</groupId>
+			<artifactId>instancio-junit</artifactId>
+			<version>${instancio.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
