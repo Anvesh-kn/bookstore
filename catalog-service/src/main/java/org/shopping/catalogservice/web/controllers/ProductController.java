@@ -27,6 +27,11 @@ class ProductController {
     @GetMapping("/{code}")
     ResponseEntity<Product> getProduct(@PathVariable(name = "code") String code) {
         System.out.println("get product by code by controller");
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return productService
                 .getProduct(code)
                 .map(ResponseEntity::ok)
