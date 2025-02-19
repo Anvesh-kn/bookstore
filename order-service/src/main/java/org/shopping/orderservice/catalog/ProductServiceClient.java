@@ -1,5 +1,6 @@
 package org.shopping.orderservice.catalog;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -17,7 +18,8 @@ public class ProductServiceClient {
         this.restClient = restClient;
     }
 
-    @Retry(name = "product_service", fallbackMethod = "getProductByCodeFallback")
+    @CircuitBreaker(name = "catalog-service")
+    @Retry(name = "catalog-service", fallbackMethod = "getProductByCodeFallback")
     public Optional<Product> getProductByCode(String code) {
         log.info("Fetching product with code: {}", code);
         var product =

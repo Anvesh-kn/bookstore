@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 import io.restassured.http.ContentType;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.shopping.orderservice.AbstractIt;
@@ -16,6 +17,7 @@ class OrderControllerTest extends AbstractIt {
     class CreateOrderTests {
         @Test
         void shouldCreateOrderSuccessfully() {
+            mockGetProductByCode("P100", "Product 1", BigDecimal.valueOf(25.50));
             var payload =
                     """
                                 {

@@ -11,12 +11,12 @@ class CatalogClientConfiguration {
 
     @Bean
     RestClient catalogClient(ApplicationProperties properties) {
-        System.out.println("properties.serviceCatalogService() = " + properties.serviceCatalogService());
+        System.out.println("properties.catalogServiceUrl() = " + properties.catalogServiceUrl());
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setReadTimeout(5000);
         factory.setConnectTimeout(5000);
         return RestClient.builder()
-                .baseUrl(properties.serviceCatalogService())
+                .baseUrl(properties.catalogServiceUrl())
                 .requestFactory(factory)
                 .build();
     }
