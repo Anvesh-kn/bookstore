@@ -72,3 +72,16 @@ services:
       resources:
         limits:
           memory: 500m
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: [ "redis-server", "--appendonly", "yes" ]
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+

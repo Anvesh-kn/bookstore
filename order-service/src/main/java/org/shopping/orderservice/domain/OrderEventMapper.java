@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.shopping.orderservice.domain.models.OrderCreatedEvent;
-import org.shopping.orderservice.domain.models.OrderItem;
+import org.shopping.orderservice.domain.models.*;
 
 class OrderEventMapper {
 
@@ -16,6 +15,38 @@ class OrderEventMapper {
                 getOrderItems(order),
                 order.getCustomer(),
                 order.getDeliveryAddress(),
+                LocalDateTime.now());
+    }
+
+    static OrderDeliveredEvent buildOrderDeliveredEvent(OrderEntity order) {
+        return new OrderDeliveredEvent(
+                UUID.randomUUID().toString(),
+                order.getOrderNumber(),
+                getOrderItems(order),
+                order.getCustomer(),
+                order.getDeliveryAddress(),
+                LocalDateTime.now());
+    }
+
+    static OrderCancelledEvent buildOrderCancelledEvent(OrderEntity order, String reason) {
+        return new OrderCancelledEvent(
+                UUID.randomUUID().toString(),
+                order.getOrderNumber(),
+                getOrderItems(order),
+                order.getCustomer(),
+                order.getDeliveryAddress(),
+                reason,
+                LocalDateTime.now());
+    }
+
+    static OrderErrorEvent buildOrderErrorEvent(OrderEntity order, String reason) {
+        return new OrderErrorEvent(
+                UUID.randomUUID().toString(),
+                order.getOrderNumber(),
+                getOrderItems(order),
+                order.getCustomer(),
+                order.getDeliveryAddress(),
+                reason,
                 LocalDateTime.now());
     }
 

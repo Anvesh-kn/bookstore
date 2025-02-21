@@ -3,8 +3,7 @@ package org.shopping.orderservice.domain;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
-import org.shopping.orderservice.domain.models.OrderCreatedEvent;
-import org.shopping.orderservice.domain.models.OrderEventType;
+import org.shopping.orderservice.domain.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
@@ -39,6 +38,36 @@ public class OrderEventService {
         this.orderEventRepository.save(orderEvent);
     }
 
+    void save(OrderDeliveredEvent event) {
+        OrderEventEntity orderEvent = new OrderEventEntity();
+        orderEvent.setEventId(event.eventId());
+        orderEvent.setEventType(OrderEventType.ORDER_DELIVERED);
+        orderEvent.setOrderNumber(event.orderNumber());
+        orderEvent.setCreatedAt(event.createdAt());
+        orderEvent.setPayload(toJsonPayload(event));
+        this.orderEventRepository.save(orderEvent);
+    }
+
+    void save(OrderCancelledEvent event) {
+        OrderEventEntity orderEvent = new OrderEventEntity();
+        orderEvent.setEventId(event.eventId());
+        orderEvent.setEventType(OrderEventType.ORDER_CANCELLED);
+        orderEvent.setOrderNumber(event.orderNumber());
+        orderEvent.setCreatedAt(event.createdAt());
+        orderEvent.setPayload(toJsonPayload(event));
+        this.orderEventRepository.save(orderEvent);
+    }
+
+    void save(OrderErrorEvent event) {
+        OrderEventEntity orderEvent = new OrderEventEntity();
+        orderEvent.setEventId(event.eventId());
+        orderEvent.setEventType(OrderEventType.ORDER_PROCESSING_FAILED);
+        orderEvent.setOrderNumber(event.orderNumber());
+        orderEvent.setCreatedAt(event.createdAt());
+        orderEvent.setPayload(toJsonPayload(event));
+        this.orderEventRepository.save(orderEvent);
+    }
+
     private String toJsonPayload(Object object) {
         try {
             return objectMapper.writeValueAsString(object);
@@ -64,6 +93,23 @@ public class OrderEventService {
                 OrderCreatedEvent orderCreatedEvent = fromJsonPayload(event.getPayload(), OrderCreatedEvent.class);
                 orderEventPublisher.publish(orderCreatedEvent);
                 break;
+            case ORDER_DELIVERED:
+                OrderDeliveredEvent orderDeliveredEvent =
+                        fromJsonPayload(event.getPayload(), OrderDeliveredEvent.class);
+                orderEventPublisher.publish(orderDeliveredEvent);
+                break;
+
+            case ORDER_CANCELLED:
+                OrderCancelledEvent orderCancelledEvent =
+                        fromJsonPayload(event.getPayload(), OrderCancelledEvent.class);
+                orderEventPublisher.publish(orderCancelledEvent);
+                break;
+
+            case ORDER_PROCESSING_FAILED:
+                OrderErrorEvent orderErrorEvent = fromJsonPayload(event.getPayload(), OrderErrorEvent.class);
+                orderEventPublisher.publish(orderErrorEvent);
+                break;
+
             default:
                 log.warn("Unsupported OrderEventType: {}", eventType);
         }

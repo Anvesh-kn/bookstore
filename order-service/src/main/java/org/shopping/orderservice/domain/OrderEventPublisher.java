@@ -1,6 +1,9 @@
 package org.shopping.orderservice.domain;
 
+import org.shopping.orderservice.domain.models.OrderCancelledEvent;
 import org.shopping.orderservice.domain.models.OrderCreatedEvent;
+import org.shopping.orderservice.domain.models.OrderDeliveredEvent;
+import org.shopping.orderservice.domain.models.OrderErrorEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +23,19 @@ public class OrderEventPublisher {
         this.send(applicationProperties.newOrdersTopic(), orderEvent);
     }
 
-    private void send(String routingKey, Object payload) {
-        kafkaTemplate.send(applicationProperties.newOrdersTopic(), routingKey, payload);
+    public void publish(OrderDeliveredEvent orderEvent) {
+        this.send(applicationProperties.deliveredOrdersTopic(), orderEvent);
+    }
+
+    public void publish(OrderCancelledEvent orderEvent) {
+        this.send(applicationProperties.cancelledOrdersTopic(), orderEvent);
+    }
+
+    public void publish(OrderErrorEvent orderEvent) {
+        this.send(applicationProperties.errorOrdersTopic(), orderEvent);
+    }
+
+    private void send(String topic, Object payload) {
+        kafkaTemplate.send(topic, payload);
     }
 }
