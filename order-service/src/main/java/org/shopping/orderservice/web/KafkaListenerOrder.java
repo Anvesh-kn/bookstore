@@ -1,10 +1,5 @@
-package org.shopping.orderservice.web;
+/*package org.shopping.orderservice.web;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
 
 @Service
 public class KafkaListenerOrder {
@@ -19,4 +14,4 @@ public class KafkaListenerOrder {
         long differenceInMillis = duration.toMillis();
         System.out.println("Difference in milliseconds: " + differenceInMillis);
     }
-}
+}*/
