@@ -10,4 +10,5 @@ public record ApplicationProperties(
         String newOrdersTopic,
         String deliveredOrdersTopic,
         String cancelledOrdersTopic,
-        String errorOrdersTopic) {}
+        String errorOrdersTopic,
+        String catalogRedisServiceUrl) {}
