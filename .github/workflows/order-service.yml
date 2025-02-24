@@ -1,4 +1,4 @@
-name : catalog service
+name : Order service
 on:
   push:
     paths:
