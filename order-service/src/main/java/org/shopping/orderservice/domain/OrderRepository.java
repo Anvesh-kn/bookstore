@@ -2,8 +2,6 @@ package org.shopping.orderservice.domain;
 
 import java.util.List;
 import java.util.Optional;
-
-import aj.org.objectweb.asm.commons.Remapper;
 import org.shopping.orderservice.domain.models.OrderStatus;
 import org.shopping.orderservice.domain.models.OrderSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,12 +18,11 @@ interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
     OrderEntity findByOrderNumber(String orderNumber);
 
-    @Query("SELECT new org.shopping.orderservice.domain.models.OrderSummary(o.orderNumber, o.status)" +
-            " FROM OrderEntity o WHERE o.userName = :userName")
+    @Query("SELECT new org.shopping.orderservice.domain.models.OrderSummary(o.orderNumber, o.status)"
+            + " FROM OrderEntity o WHERE o.userName = :userName")
     List<OrderSummary> findByUserName(String userName);
 
-    @Query("select distinct o\n" +
-            "        from OrderEntity o left join fetch o.items\n" +
-            "        where o.userName = :userName and o.orderNumber = :orderNumber ")
+    @Query("select distinct o\n" + "        from OrderEntity o left join fetch o.items\n"
+            + "        where o.userName = :userName and o.orderNumber = :orderNumber ")
     Optional<OrderEntity> findByUserNameAndOrderNumber(String userName, String orderNumber);
 }

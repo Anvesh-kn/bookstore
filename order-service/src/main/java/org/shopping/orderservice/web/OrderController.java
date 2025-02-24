@@ -1,6 +1,7 @@
 package org.shopping.orderservice.web;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import org.shopping.orderservice.domain.OrderService;
 import org.shopping.orderservice.domain.SecurityService;
 import org.shopping.orderservice.domain.models.CreateOrderRequest;
@@ -12,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")

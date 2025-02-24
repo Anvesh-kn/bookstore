@@ -1,22 +1,17 @@
 package org.shopping.orderservice.web;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
-
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
-
 import java.math.BigDecimal;
 import java.util.List;
-
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.shopping.orderservice.AbstractIt;
-import io.restassured.common.mapper.TypeRef;
-import org.shopping.orderservice.domain.SecurityService;
 import org.shopping.orderservice.domain.models.OrderSummary;
 import org.shopping.orderservice.testdata.TestDataFactory;
 import org.springframework.http.HttpStatus;
@@ -29,7 +24,7 @@ class OrderControllerTest extends AbstractIt {
     class CreateOrderTests {
         @Test
         void shouldCreateOrderSuccessfully() {
-//            when(securityService.getLoginUserName()).thenReturn("user");
+            //            when(securityService.getLoginUserName()).thenReturn("user");
             mockGetProductByCode("P100", "Product 1", BigDecimal.valueOf(25.50));
             var payload =
                     """
@@ -82,15 +77,14 @@ class OrderControllerTest extends AbstractIt {
     class GetOrdersTests {
         @Test
         void shouldGetOrdersSuccessfully() {
-//            when(securityService.getLoginUserName()).thenReturn("user");
+            //            when(securityService.getLoginUserName()).thenReturn("user");
             List<OrderSummary> orderSummaries = given().when()
                     .get("/api/orders")
                     .then()
                     .statusCode(200)
                     .extract()
                     .body()
-                    .as(new TypeRef<>() {
-                    });
+                    .as(new TypeRef<>() {});
             assertThat(orderSummaries).hasSize(2);
         }
     }
@@ -101,9 +95,9 @@ class OrderControllerTest extends AbstractIt {
 
         @Test
         void shouldGetOrderSuccessfully() {
-//            when(securityService.getLoginUserName()).thenReturn("user");
+            //            when(securityService.getLoginUserName()).thenReturn("user");
             given().when()
-//                    .header("Authorization", "Bearer " + getToken())
+                    //                    .header("Authorization", "Bearer " + getToken())
                     .get("/api/orders/{orderNumber}", orderNumber)
                     .then()
                     .statusCode(200)

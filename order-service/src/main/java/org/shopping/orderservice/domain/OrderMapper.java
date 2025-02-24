@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import org.jetbrains.annotations.NotNull;
 import org.shopping.orderservice.domain.models.*;
 
