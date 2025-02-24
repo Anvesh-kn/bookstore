@@ -1,14 +1,16 @@
 package org.shopping.orderservice.domain;
 
 import jakarta.transaction.Transactional;
+
+import java.lang.ScopedValue;
 import java.util.List;
-import org.shopping.orderservice.domain.models.CreateOrderRequest;
-import org.shopping.orderservice.domain.models.CreateOrderResponse;
-import org.shopping.orderservice.domain.models.OrderCreatedEvent;
-import org.shopping.orderservice.domain.models.OrderStatus;
+import java.util.Optional;
+
+import org.shopping.orderservice.domain.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 @Transactional
@@ -67,5 +69,16 @@ public class OrderService {
     private boolean canBeDelivered(OrderEntity order) {
         return DELIVERY_ALLOWED_COUNTRIES.contains(
                 order.getDeliveryAddress().country().toUpperCase());
+    }
+
+
+    public List<OrderSummary> findOrders(String userName) {
+        return orderRepository.findByUserName(userName);
+    }
+
+
+    public Optional<OrderDto> findUserOrder(String userName, String orderNumber) {
+        return orderRepository.findByUserNameAndOrderNumber(userName, orderNumber)
+                .map(OrderMapper::convertToDto);
     }
 }

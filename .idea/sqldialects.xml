@@ -3,6 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/order-service/src/main/resources/db/migration/V1__create_order_tables.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/resources/db/migration/V2__create_order_events_tables.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/order-service/src/test/java/resources/test-orders.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/order-service/src/test/resources/test-orders.sql" dialect="PostgreSQL" />
   </component>
 </project>

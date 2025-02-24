@@ -1,11 +1,13 @@
 package org.shopping.orderservice.domain;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import org.shopping.orderservice.domain.models.CreateOrderRequest;
-import org.shopping.orderservice.domain.models.OrderItem;
-import org.shopping.orderservice.domain.models.OrderStatus;
+import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
+import org.shopping.orderservice.domain.models.*;
 
 class OrderMapper {
     static OrderEntity convertToEntity(CreateOrderRequest request) {
@@ -26,5 +28,27 @@ class OrderMapper {
         }
         newOrder.setItems(orderItems);
         return newOrder;
+    }
+
+    public static List<OrderSummary> convertToOrderSummary(List<OrderEntity> orderEntities) {
+        return orderEntities.stream()
+                .map(orderEntity -> new OrderSummary(orderEntity.getOrderNumber(), orderEntity.getStatus()))
+                .toList();
+    }
+
+    public static OrderDto convertToDto(@NotNull OrderEntity order) {
+        Set<OrderItem> orderItems = order.getItems().stream()
+                .map(item -> new OrderItem(item.getCode(), item.getName(), item.getPrice(), item.getQuantity()))
+                .collect(Collectors.toSet());
+
+        return new OrderDto(
+                order.getOrderNumber(),
+                order.getUserName(),
+                orderItems,
+                order.getCustomer(),
+                order.getDeliveryAddress(),
+                order.getStatus(),
+                order.getComments(),
+                order.getCreatedAt());
     }
 }
