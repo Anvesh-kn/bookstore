@@ -11,4 +11,5 @@ public record ApplicationProperties(
         String deliveredOrdersTopic,
         String cancelledOrdersTopic,
         String errorOrdersTopic,
-        String catalogRedisServiceUrl) {}
+        String catalogRedisServiceUrl,
+        @Value("${spring.kafka.bootstrap-servers}") String kafkaBootstrapServers) {}
