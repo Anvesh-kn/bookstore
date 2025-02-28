@@ -45,4 +45,28 @@ services:
         limits:
           memory: 1200m
 
+  notification-service:
+    image: anveshlp/bookstore-notification-service:latest
+    container_name: notification-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_URL=jdbc:postgresql://notifications-db:5432/postgres
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - MAIL_HOST=mailhog
+      - MAIL_PORT=1025
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_HOST=kafka:9092
+    ports:
+      - "8083:8083"
+    restart: unless-stopped
+    depends_on:
+      notifications-db:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 1200m
 
