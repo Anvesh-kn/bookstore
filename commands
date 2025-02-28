@@ -3,10 +3,14 @@ spotless apply
 
 building catalog service
 ./mvnw -pl catalog-service spring-boot:build-image -DskipTests
+./mvnw -pl order-service spring-boot:build-image -DskipTests
+./mvnw -pl notification-service spring-boot:build-image -DskipTests
+
 
 running infra and apps
 docker-compose -f deployment/docker-compose/infra.yml -f deployment/docker-compose/apps.yml up -d
 
+docker compose -f deployment/docker-compose/infra.yml -f deployment/docker-compose/apps.yml up -d
 run github
 
 

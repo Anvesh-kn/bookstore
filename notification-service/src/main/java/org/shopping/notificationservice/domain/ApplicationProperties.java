@@ -12,5 +12,4 @@ public record ApplicationProperties(
         String errorOrdersTopic,
         String catalogRedisServiceUrl,
         @Value("${spring.kafka.bootstrap-servers}") String kafkaBootstrapServers,
-        String supportEmail) {
-}
+        String supportEmail) {}

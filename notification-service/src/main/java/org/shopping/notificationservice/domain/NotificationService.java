@@ -1,6 +1,5 @@
 package org.shopping.notificationservice.domain;
 
-
 import jakarta.mail.internet.MimeMessage;
 import org.shopping.orderservice.domain.models.OrderCancelledEvent;
 import org.shopping.orderservice.domain.models.OrderCreatedEvent;
@@ -12,14 +11,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class NotificationService {
     private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
 
     private final JavaMailSender javaMailSender;
     private final ApplicationProperties applicationProperties;
-
 
     public NotificationService(JavaMailSender javaMailSender, ApplicationProperties applicationProperties) {
         this.javaMailSender = javaMailSender;
@@ -114,5 +111,4 @@ public class NotificationService {
             throw new RuntimeException("Error while sending email", e);
         }
     }
-
 }

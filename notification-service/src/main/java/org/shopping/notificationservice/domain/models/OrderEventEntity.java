@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,8 +26,7 @@ public class OrderEventEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public OrderEventEntity() {
-    }
+    public OrderEventEntity() {}
 
     public OrderEventEntity(String eventId) {
         this.eventId = eventId;

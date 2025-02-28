@@ -10,7 +10,6 @@ import org.testcontainers.utility.DockerImageName;
 @TestConfiguration(proxyBeanMethods = false)
 class TestcontainersConfiguration {
 
-
     @Bean
     @ServiceConnection
     org.testcontainers.containers.KafkaContainer kafkaContainer() {
@@ -25,5 +24,4 @@ class TestcontainersConfiguration {
                 .withUsername("postgres")
                 .withPassword("postgres");
     }
-
 }

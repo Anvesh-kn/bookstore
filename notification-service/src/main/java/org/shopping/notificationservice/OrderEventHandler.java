@@ -1,9 +1,8 @@
 package org.shopping.notificationservice;
 
-
-import jakarta.mail.internet.MimeMessage;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import org.shopping.notificationservice.domain.ApplicationProperties;
-
 import org.shopping.notificationservice.domain.NotificationService;
 import org.shopping.notificationservice.domain.OrderEventRepository;
 import org.shopping.notificationservice.domain.models.OrderEventEntity;
@@ -14,12 +13,7 @@ import org.shopping.orderservice.domain.models.OrderErrorEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Component
 public class OrderEventHandler {
@@ -30,7 +24,10 @@ public class OrderEventHandler {
     private final NotificationService notificationService;
     private final OrderEventRepository orderEventRepository;
 
-    public OrderEventHandler(ApplicationProperties applicationProperties, NotificationService notificationService, OrderEventRepository orderEventRepository) {
+    public OrderEventHandler(
+            ApplicationProperties applicationProperties,
+            NotificationService notificationService,
+            OrderEventRepository orderEventRepository) {
         this.applicationProperties = applicationProperties;
         this.notificationService = notificationService;
         this.orderEventRepository = orderEventRepository;
@@ -94,6 +91,4 @@ public class OrderEventHandler {
             log.warn("Failed to calculate event processing time: {}", e.getMessage());
         }
     }
-
-
 }

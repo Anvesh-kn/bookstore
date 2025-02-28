@@ -1,6 +1,8 @@
 package org.shopping.notificationservice.configuaration;
 
 import jakarta.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -8,7 +10,6 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.shopping.notificationservice.domain.ApplicationProperties;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +19,6 @@ import org.springframework.kafka.support.converter.JsonMessageConverter;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableConfigurationProperties(ApplicationProperties.class)
@@ -47,27 +45,29 @@ public class KafkaConfiguration {
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
-//        return new DefaultKafkaProducerFactory<>(new HashMap<>());
+        //        return new DefaultKafkaProducerFactory<>(new HashMap<>());
     }
 
     @Bean
     public KafkaTemplate<String, Object> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
-/*
+    /*
     @Bean
     public ConsumerFactory<String, Object> consumerFactory(KafkaProperties kafkaProperties) {
-      *//* Map<String, Object> configProps = new HashMap<>();
-        System.out.println("anvesh_kafka)");
-        System.out.println("anvesh_kafka)" + kafkaBootstrapServers);
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBootstrapServers);
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "order-service");
-        configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
-        configProps.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
-        configProps.put(JsonDeserializer.TRUSTED_PACKAGES, "org.shopping.orderservice.domain.models,org.shopping.notificationservice.domain.models");
-        System.out.println("Trusted packages: " + configProps.get(JsonDeserializer.TRUSTED_PACKAGES));
-        return new DefaultKafkaConsumerFactory<>(configProps);*//*
+      */
+    /* Map<String, Object> configProps = new HashMap<>();
+    System.out.println("anvesh_kafka)");
+    System.out.println("anvesh_kafka)" + kafkaBootstrapServers);
+    configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBootstrapServers);
+    configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "order-service");
+    configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+    configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
+    configProps.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
+    configProps.put(JsonDeserializer.TRUSTED_PACKAGES, "org.shopping.orderservice.domain.models,org.shopping.notificationservice.domain.models");
+    System.out.println("Trusted packages: " + configProps.get(JsonDeserializer.TRUSTED_PACKAGES));
+    return new DefaultKafkaConsumerFactory<>(configProps);*/
+    /*
         Map<String, Object> configProps = new HashMap<>(kafkaProperties.buildConsumerProperties());
         System.out.println("Consumer Factory Config: " + configProps);
         return new DefaultKafkaConsumerFactory<>(configProps);
@@ -82,18 +82,20 @@ public class KafkaConfiguration {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "org.shopping.orderservice.domain.models,org.shopping.notificationservice.domain.models");
+        props.put(
+                JsonDeserializer.TRUSTED_PACKAGES,
+                "org.shopping.orderservice.domain.models,org.shopping.notificationservice.domain.models");
         props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, Map.class.getName());
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory(ConsumerFactory<String, Object> consumerFactory) {
+    public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory(
+            ConsumerFactory<String, Object> consumerFactory) {
         ConcurrentKafkaListenerContainerFactory<String, Object> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         return factory;
-
     }
 
     @Bean
