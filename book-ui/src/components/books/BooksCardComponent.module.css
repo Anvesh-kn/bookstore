@@ -6,23 +6,26 @@
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    padding-bottom: 1rem; /* Add spacing at the bottom */
 }
 
 .card:hover {
     transform: scale(1.05);
 }
-
 /* Book Image */
 .image {
     width: 100%;
-    height: 200px;
+    height: 300px;
     object-fit: cover;
 }
 
 /* Card Body */
-.body {
-    padding: 1rem;
+.bookCardBody {
     text-align: center;
+    /*padding: 1rem;*/
 }
 
 /* Book Title */
@@ -39,4 +42,22 @@
     color: #2563eb;
     font-weight: bold;
     margin-top: 0.5rem;
+}
+
+/* Centered Button */
+.addToCartButton {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: auto; /* Push button to bottom */
+    width: 80%; /* Make it responsive */
+    text-align: center;
+}
+
+.addToCartButton:hover {
+    background-color: #1d4ed8;
 }

@@ -8,10 +8,11 @@ function BooksCardComponent(props: { book:Books}) {
     return (
         <div className={classes.card}>
             <img src={book.imageUrl} alt={book.title} className={classes.image}/>
-            <div className={classes.body}>
+            <div className={classes.bookCardBody}>
                 <h2 className={classes.title}>{book.title}</h2>
                 <p className={classes.price}>${book.price}</p>
             </div>
+            <button className={classes.addToCartButton}>Add to cart</button>
         </div>
     );
 }

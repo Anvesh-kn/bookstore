@@ -25,8 +25,10 @@ function BooksComponent() {
                 <button>Next</button>
                 <button>Last</button>
             </div>
-            <div className={classes.grid}>
-                {booksList}
+            <div className={classes.body}>
+                <div className={classes.grid}>
+                    {booksList}
+                </div>
             </div>
         </Fragment>
     );
