@@ -1,4 +1,5 @@
 import classes from "./Navigation.module.css";
+import {Link} from "react-router-dom";
 
 
 function Navigation() {
@@ -7,13 +8,13 @@ function Navigation() {
         <nav className={classes.nav}>
             <ul>
                 <li>
-                    <a href="/public">BookStore</a>
+                    <Link to="/">BookStore</Link>
                 </li>
                 <li>
-                    <a href="/orders">Orders</a>
+                    <Link to="/orders">Orders</Link>
                 </li>
                 <li>
-                    <a href="/cart">Cart</a>
+                    <Link to="/cart">Cart</Link>
                 </li>
             </ul>
         </nav>
