@@ -1,0 +1,42 @@
+/* Card Container */
+.card {
+    width: 250px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Book Image */
+.image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Card Body */
+.body {
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Book Title */
+.title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+/* Book Price */
+.price {
+    font-size: 1rem;
+    color: #2563eb;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}

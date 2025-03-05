@@ -1,0 +1,38 @@
+/* Basic Navbar Styling */
+nav {
+    background-color: #170202; /* Dark Red */
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Container */
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between; /* Pushes items to edges */
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+/* Left & Right Navigation */
+nav ul li:first-child {
+    margin-right: auto; /* Pushes Bookstore to the left */
+}
+
+nav ul li {
+    margin-left: 2rem;
+}
+
+/* Navbar Links */
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+    color: #dbeafe; /* Light Blue */
+}
