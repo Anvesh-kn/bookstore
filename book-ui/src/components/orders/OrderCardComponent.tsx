@@ -1,5 +1,5 @@
-function OrderCardComponent() {
 
+function OrderCardComponent() {
 
 
     return (
