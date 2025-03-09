@@ -1,17 +1,27 @@
-import CartItem from "../../domain/CartItem.ts";
 import CartItemComponent from "./CartItemComponent.tsx";
 import CartFormComponent from "./CartFormComponent.tsx";
+import {useCallback, useMemo, useState} from "react";
 
 function CartComponent() {
-    const cartItems: Array<CartItem> = [
+    const [cartItems, setCartItems] = useState([
         {id: "1", title: "Book1", price: 10, quantity: 1},
         {id: "2", title: "Book2", price: 20, quantity: 1},
         {id: "3", title: "Book3", price: 30, quantity: 1},
-];
-    const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    ]);
+
+    const updateQuantity = useCallback((id: string, quantity: number) => {
+        setCartItems((prev) => prev.map((item) =>
+            item.id === id ? {...item, quantity} : item
+        ));
+    }, []);
+
+    const totalAmount = useMemo(() =>
+            cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        [cartItems]);
 
     const cartComponentItems = cartItems.map((cartItem) => {
-        return (<CartItemComponent key={cartItem.id} cartItem={cartItem}></CartItemComponent>);
+        return (<CartItemComponent key={cartItem.id} cartItem={cartItem}
+                                   updateQuantityParent={updateQuantity}></CartItemComponent>);
     });
     return (
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg shadow-lg max-w-5xl mx-auto my-8">
