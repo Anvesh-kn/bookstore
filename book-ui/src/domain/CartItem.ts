@@ -1,12 +1,12 @@
 class CartItem {
-    title: string;
-    id: string
+    description: string;
+    code: string
     price: number;
     quantity: number ;
 
     constructor(title: string, id: string,  price: number, quantity: number) {
-        this.title = title;
-        this.id = id;
+        this.description = title;
+        this.code = id;
         this.price = price;
         this.quantity = quantity;
 

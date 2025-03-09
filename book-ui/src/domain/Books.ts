@@ -1,16 +1,27 @@
-class Books {
-    title: string;
-    id: string
+class Book {
+    code: string;
+    description: string;
     imageUrl: string;
+    name: string;
     price: number;
 
-    constructor(title: string, id: string, imageUrl: string, price: number) {
-        this.title = title;
-        this.id = id;
+    constructor(code: string, description: string, imageUrl: string, name: string, price: number) {
+        this.code = code;
+        this.description = description;
         this.imageUrl = imageUrl;
+        this.name = name;
         this.price = price;
-
     }
 }
 
-export default Books;
+/*
+interface Book {
+    code: string;
+    description: string;
+    imageUrl: string;
+    name: string;
+    price: number;
+}
+*/
+
+export default Book

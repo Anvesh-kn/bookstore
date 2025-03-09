@@ -1,18 +1,34 @@
 import CartItemComponent from "./CartItemComponent.tsx";
 import CartFormComponent from "./CartFormComponent.tsx";
-import {useCallback, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 
 function CartComponent() {
     const [cartItems, setCartItems] = useState([
-        {id: "1", title: "Book1", price: 10, quantity: 1},
-        {id: "2", title: "Book2", price: 20, quantity: 1},
-        {id: "3", title: "Book3", price: 30, quantity: 1},
+        {code: "1", description: "Book1", price: 10, quantity: 1},
+        {code: "2", description: "Book2", price: 20, quantity: 1},
+        {code: "3", description: "Book3", price: 30, quantity: 1},
     ]);
 
+    useEffect(() => {
+        getCartItemFromLocalStorage()
+    }, []);
+
+    const getCartItemFromLocalStorage = () => {
+        const cartItems = localStorage.getItem("cart");
+        if (cartItems) {
+            setCartItems(JSON.parse(cartItems));
+        }
+    }
+
     const updateQuantity = useCallback((id: string, quantity: number) => {
-        setCartItems((prev) => prev.map((item) =>
-            item.id === id ? {...item, quantity} : item
-        ));
+
+        setCartItems((prev) => {
+            const updatedCartItems = prev.map((item) =>
+                item.code === id ? { ...item, quantity } : item
+            );
+            localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+            return updatedCartItems;
+        });
     }, []);
 
     const totalAmount = useMemo(() =>
@@ -20,7 +36,7 @@ function CartComponent() {
         [cartItems]);
 
     const cartComponentItems = cartItems.map((cartItem) => {
-        return (<CartItemComponent key={cartItem.id} cartItem={cartItem}
+        return (<CartItemComponent key={cartItem.code} cartItem={cartItem}
                                    updateQuantityParent={updateQuantity}></CartItemComponent>);
     });
     return (

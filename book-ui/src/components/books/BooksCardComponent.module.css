@@ -13,7 +13,7 @@
 }
 
 .card:hover {
-    transform: scale(1.05);
+    /*/;*!*/
 }
 /* Book Image */
 .image {
@@ -56,8 +56,20 @@
     margin-top: auto; /* Push button to bottom */
     width: 80%; /* Make it responsive */
     text-align: center;
+    transition: all 0.1s ease; /* Quick transition for all properties */
+    position: relative;
+    outline: none;
+    box-shadow: 0 4px 0 #1d4ed8; /* Add a visible bottom shadow */
+    transform: translateY(0); /* Starting position */
 }
 
 .addToCartButton:hover {
     background-color: #1d4ed8;
+    transform: scale(1.05)
+}
+
+.addToCartButton:active {
+    transform: translateY(4px); /* Move down significantly */
+    box-shadow: 0 0 0 #1d4ed8; /* Remove shadow when pressed */
+    background-color: #1e40af; /* Darker color */
 }

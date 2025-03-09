@@ -1,36 +1,103 @@
 /* Pagination Buttons */
 .pagination {
-    text-align: center;
-    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 2rem 0;
 }
 
 .pagination button {
-    background-color: #1d4ed8;
+    background-color: #2563eb;
     color: white;
     border: none;
-    padding: 10px 15px;
-    margin: 5px;
+    padding: 0.75rem 1.25rem;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 100px; /* Consistent button width */
 }
 
 .pagination button:hover {
     background-color: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.pagination button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.pagination button:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Current page indicator */
+.pageIndicator {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #4b5563;
 }
 
 /* Grid Layout */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive Grid */
-    gap: 5px;
-    padding: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
     justify-content: center;
 }
 
+/* Responsive container */
 .body {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+}
+
+/* Loading and error states */
+.loadingState, .errorState {
     text-align: center;
-    padding-left: 5rem;
-    padding-right: 5rem;
-    padding-top: 0rem;
+    padding: 3rem;
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    margin: 2rem auto;
+    max-width: 500px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.loadingState {
+    color: #4b5563;
+}
+
+.errorState {
+    color: #ef4444;
+}
+
+/* Add responsive adjustments */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .body {
+        padding: 0 1rem 2rem;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+    }
+
+    .pagination button {
+        min-width: 80px;
+        padding: 0.5rem 0.75rem;
+    }
 }

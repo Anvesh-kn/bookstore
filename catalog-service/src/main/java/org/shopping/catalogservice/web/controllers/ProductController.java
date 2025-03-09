@@ -1,9 +1,6 @@
 package org.shopping.catalogservice.web.controllers;
 
-import org.shopping.catalogservice.domain.PageResult;
-import org.shopping.catalogservice.domain.Product;
-import org.shopping.catalogservice.domain.ProductNotFoundException;
-import org.shopping.catalogservice.domain.ProductService;
+import org.shopping.catalogservice.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +12,20 @@ class ProductController {
     @Autowired
     private ProductService productService;
 
-    public ProductController(ProductService productService) {
+
+    private final ApplicationProperties applicationProperties;
+
+    private final int LIMIT ;
+
+    public ProductController(ProductService productService, ApplicationProperties applicationProperties) {
         this.productService = productService;
+        this.applicationProperties = applicationProperties;
+        this.LIMIT = applicationProperties.pageSize();
     }
 
     @GetMapping
-    public PageResult<Product> getProduct(@RequestParam(name = "page", defaultValue = "1") int page) {
-        return productService.getProduct(page);
+    public PageResult<Product> getProduct(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "limit", defaultValue = "5") int limit) {
+        return productService.getProduct(page,limit);
     }
 
     @GetMapping("/{code}")

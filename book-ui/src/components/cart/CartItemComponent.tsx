@@ -3,7 +3,7 @@ import {useState} from "react";
 
 interface CartItemProps {
     cartItem: CartItem;
-    updateQuantityParent: (id: string, newQuantity: number) => void;
+    updateQuantityParent: (code: string, newQuantity: number) => void;
 }
 
 function CartItemComponent(props: CartItemProps) {
@@ -13,12 +13,12 @@ function CartItemComponent(props: CartItemProps) {
 
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuantity(parseInt(e.target.value));
-        props.updateQuantityParent(cartItem.id, parseInt(e.target.value));
+        props.updateQuantityParent(cartItem.code, parseInt(e.target.value));
     }
 
     return (
-        <tr className="hover:bg-blue-50 transition-colors duration-150" key={cartItem.id}>
-            <td className="py-4 px-4 text-left font-medium text-indigo-700">{cartItem.title}</td>
+        <tr className="hover:bg-blue-50 transition-colors duration-150" key={cartItem.code}>
+            <td className="py-4 px-4 text-left font-medium text-indigo-700">{cartItem.description}</td>
             <td className="py-4 px-4 text-center">${cartItem.price.toFixed(2)}</td>
             <td className="py-4 px-4">
                 <div className="flex justify-center">
