@@ -1,33 +1,92 @@
 import Order from "../../domain/Order.ts";
 import OrderItemsTableComponent from "./OrderItemsTableComponent.tsx";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import urlConfig from "../../properties.ts";
+import OrderEntity from "../../domain/OrderEntity.ts";
+import Book from "../../domain/Books.ts";
 
 
 function OrderComponent() {
-    const orders: Array<Order> = [
-        {id: "550e8400-e29b-41d4-a716-446655440000", price: 100},
-        {id: "550e8400-e29b-41d4-a716-4466554400002", price: 200},
-        {id: "550e8400-e29b-41d4-a716-4466554400002", price: 300},
+    const ordersSample: Array<Order> = [
+        {orderNumber: "550e8400-e29b-41d4-a716-446655440000", status: "Delivered"},
+        {orderNumber: "550e8400-e29b-41d4-a716-4466554400002", status: "Delivered"},
+        {orderNumber: "550e8400-e29b-41d4-a716-4466554400002", status: "Delivered"},
     ];
 
-    const orderItems = [
-        {product: "Widget A", quantity: 2, price: 25.00},
-        {product: "Widget B", quantity: 1, price: 70.00}
-    ];
+    const orderSample = new OrderEntity(
+        "550e8400-e29b-41d4-a716-446655440000",
+        "user",
+        [new Book("1234", "Book 1", "Author 1","Description 1", 10.99)],
+        {
+            name: "John Doe",
+            email: "",
+            phone: "",
+            addressLine1: "",
+            addressLine2: "",
+            city: "",
+            state: "",
+            zipCode: "",
+            country: ""
+        },
+        {addressLine1: "123 Main St", addressLine2:"", city: "Springfield", state: "IL", zipCode: "62701", country: "USA"},
+        "Shipped",
+        "Comments",
+        "2025-03-07",
+        10.99
+    );
+
+    const [orders, setOrderItems] = useState<Array<Order>>(ordersSample);
+    const [selectedOrderId, setSelectedOrder] = useState<string>("");
+    const [orderen, setOrder] = useState<OrderEntity | null>(orderSample);
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const response = await axios.get(urlConfig.endpoints.getOrdersList());
+                console.log("Orders fetched:", response.data);
+                console.log(response)
+                setOrderItems(response.data)
+                setOrder(response.data)
+                console.log()
+                return
+            } catch (err: any) {
+                console.error("Error fetching orders:", err);
+            }
+        }
+
+        fetchOrders();
+    }, []);
+
+    useEffect(() => {
+        const fetchOrderDetails = async () => {
+            try {
+                const response = await axios.get(urlConfig.endpoints.getOrderById(selectedOrderId));
+                console.log("Order fetched:", response.data);
+                setOrder(response.data)
+                return
+            } catch (err: any) {
+                console.error("Error fetching orders:", err);
+            }
+        }
+        fetchOrderDetails();
+    }, [selectedOrderId]);
 
     function handleOrderClick(id: string) {
         console.log(`Order clicked: ${id}`);
+        setSelectedOrder(id)
+
     }
-    const selectedOrderId:string="550e8400-e29b-41d4-a716-446655440000"
 
     const orderList = orders.map((order) => (
         <li
-            key={order.id}
+            key={order.orderNumber}
             className={`p-3 bg-blue-100 rounded cursor-pointer hover:bg-blue-300 ${
-                selectedOrderId === order.id ? 'bg-blue-300 border-l-4 border-blue-600' : ''
+                selectedOrderId === order.orderNumber ? 'bg-blue-300 border-l-4 border-blue-600' : ''
             }`}
-            onClick={() => handleOrderClick(order.id)} // Add this function to handle clicks
+            onClick={() => handleOrderClick(order.orderNumber)} // Add this function to handle clicks
         >
-            Order # {order.id || 'N/A'} - ${order.price?.toFixed(2) || '0.00'}
+            Order # {order.orderNumber || 'N/A'} - {order.status || 'Unknown'}
         </li>
     ))
 
@@ -51,7 +110,7 @@ function OrderComponent() {
                     <p className="mt-1"><strong>Customer:</strong> John Doe</p>
                     <p className="mt-1"><strong>Status:</strong> Shipped</p>
 
-                    <OrderItemsTableComponent items={orderItems}></OrderItemsTableComponent>
+                    <OrderItemsTableComponent order={orderen ?? orderSample}></OrderItemsTableComponent>
                 </div>
             </div>
         </div>

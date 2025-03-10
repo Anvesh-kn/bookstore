@@ -24,7 +24,7 @@ function CartComponent() {
 
         setCartItems((prev) => {
             const updatedCartItems = prev.map((item) =>
-                item.code === id ? { ...item, quantity } : item
+                item.code === id ? {...item, quantity} : item
             );
             localStorage.setItem('cart', JSON.stringify(updatedCartItems));
             return updatedCartItems;

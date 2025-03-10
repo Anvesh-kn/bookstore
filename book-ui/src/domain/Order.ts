@@ -1,10 +1,10 @@
 class Order {
-    id: string;
-    price: number;
+    orderNumber: string;
+    status: string;
 
-    constructor(id: string, price: number) {
-        this.id = id;
-        this.price = price;
+    constructor(id: string, status: string) {
+        this.orderNumber = id;
+        this.status = status;
     }
 }
 

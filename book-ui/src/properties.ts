@@ -4,10 +4,16 @@ const urlConfig = {
         orders: '/orders',
         product:'/products',
     },
+    apiOrders:{
+        baseUrl: 'http://localhost:8082/api',
+        orders: '/orders',
+    },
+
     endpoints: {
         createOrder: (limit: number, page: number) => `${urlConfig.api.baseUrl}${urlConfig.api.orders}?limit=${limit}&page=${page}`,
-        getOrdersList: (limit: number, page: number) => `${urlConfig.api.baseUrl}${urlConfig.api.orders}?limit=${limit}&page=${page}`,
-        getOrderById: (id: string) => `${urlConfig.api.baseUrl}${urlConfig.api.orders}/${id}`,
+        getOrdersList: () => `${urlConfig.apiOrders.baseUrl}${urlConfig.apiOrders.orders}`,
+        getOrdersListWithPagination: (limit: number, page: number) => `${urlConfig.api.baseUrl}${urlConfig.api.orders}?limit=${limit}&page=${page}`,
+        getOrderById: (id: string) => `${urlConfig.apiOrders.baseUrl}${urlConfig.apiOrders.orders}/${id}`,
         getProducts: (limit: number, page: number) => `${urlConfig.api.baseUrl}${urlConfig.api.product}?limit=${limit}&page=${page}`,
         getProductByCode: (code: string) => `${urlConfig.api.baseUrl}${urlConfig.api.product}/${code}`,
     },

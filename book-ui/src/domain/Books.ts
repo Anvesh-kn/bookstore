@@ -4,6 +4,7 @@ class Book {
     imageUrl: string;
     name: string;
     price: number;
+    quantity: number = 1;
 
     constructor(code: string, description: string, imageUrl: string, name: string, price: number) {
         this.code = code;
@@ -12,6 +13,7 @@ class Book {
         this.name = name;
         this.price = price;
     }
+
 }
 
 /*
