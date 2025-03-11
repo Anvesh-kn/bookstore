@@ -1,6 +1,8 @@
 import {useRef, useState} from "react";
 import Customer from "../../domain/Customer.ts";
 import * as React from "react";
+import DeliveryAddress from "../../domain/DeliveryAddress.ts";
+import BaseCutomer from "../../domain/BaseCutomer.ts";
 
 const initialFormData = {
     customer: {name: "Anvesh", email: "knanvesh.01@gmail.com", phone: "4752341212"},
@@ -23,7 +25,11 @@ const sampleCustomer: Customer = new Customer(initialFormData.customer.name,
     initialFormData.deliveryAddress.zipCode,
     initialFormData.deliveryAddress.country);
 
-function CartFormComponent() {
+interface cartFormProps {
+    handleFormSubmit: (customer:BaseCutomer,address:DeliveryAddress) => void;
+}
+
+function CartFormComponent(props: cartFormProps) {
     const [formData, setFormData] = useState({
         customer: {
             name: sampleCustomer.name, email: sampleCustomer.email,
@@ -59,6 +65,8 @@ function CartFormComponent() {
     };
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        const { customer, deliveryAddress } = formData;
+        props.handleFormSubmit(customer,deliveryAddress);
         console.log("Form submitted:", formData.deliveryAddress);
     };
 

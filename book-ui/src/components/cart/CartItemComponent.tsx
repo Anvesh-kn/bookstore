@@ -18,7 +18,7 @@ function CartItemComponent(props: CartItemProps) {
 
     return (
         <tr className="hover:bg-blue-50 transition-colors duration-150" key={cartItem.code}>
-            <td className="py-4 px-4 text-left font-medium text-indigo-700">{cartItem.description}</td>
+            <td className="py-4 px-4 text-left font-medium text-indigo-700">{cartItem.name}</td>
             <td className="py-4 px-4 text-center">${cartItem.price.toFixed(2)}</td>
             <td className="py-4 px-4">
                 <div className="flex justify-center">

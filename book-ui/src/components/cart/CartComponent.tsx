@@ -2,11 +2,17 @@ import CartItemComponent from "./CartItemComponent.tsx";
 import CartFormComponent from "./CartFormComponent.tsx";
 import {useCallback, useEffect, useMemo, useState} from "react";
 
+import DeliveryAddress from "../../domain/DeliveryAddress.ts";
+import BaseCutomer from "../../domain/BaseCutomer.ts";
+import OrderNew from "../../domain/OrderNew.ts";
+import axios from "axios";
+import urlConfig from "../../properties.ts";
+
 function CartComponent() {
     const [cartItems, setCartItems] = useState([
-        {code: "1", description: "Book1", price: 10, quantity: 1},
-        {code: "2", description: "Book2", price: 20, quantity: 1},
-        {code: "3", description: "Book3", price: 30, quantity: 1},
+        {code: "1", name: "Book1", price: 10, quantity: 1},
+        {code: "2", name: "Book2", price: 20, quantity: 1},
+        {code: "3", name: "Book3", price: 30, quantity: 1},
     ]);
 
     useEffect(() => {
@@ -20,8 +26,24 @@ function CartComponent() {
         }
     }
 
-    const updateQuantity = useCallback((id: string, quantity: number) => {
+    const getCustomerDetails = (customer: BaseCutomer, address: DeliveryAddress) => {
+        console.log(customer, address);
+        const newOrder: OrderNew = new OrderNew(cartItems, customer, address);
+        placeOrder(newOrder);
 
+    }
+
+    const placeOrder = async (order: OrderNew) => {
+        try {
+            const response = await axios.post(urlConfig.endpoints.postOrder(), order, {headers: {"Content-Type": "application/json"}});
+            console.log("Order placed successfully:", response);
+        } catch (error: any) {
+            console.error("Error placing order:", error);
+        }
+
+    }
+
+    const updateQuantity = useCallback((id: string, quantity: number) => {
         setCartItems((prev) => {
             const updatedCartItems = prev.map((item) =>
                 item.code === id ? {...item, quantity} : item
@@ -64,7 +86,7 @@ function CartComponent() {
                     </tfoot>
                 </table>
             </div>
-            <CartFormComponent/>
+            <CartFormComponent handleFormSubmit={getCustomerDetails}/>
         </div>
     );
 }
